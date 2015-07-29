@@ -1,0 +1,7 @@
+*.pyc
+svn.log
+passwd
+passwd_new
+authz
+authz_new
+test.py
