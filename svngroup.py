@@ -62,10 +62,9 @@ class SvnGroup:
         print("ID:")
         for id in self.idlist:
             print(" "  +  id.name )
-        print("")
         print("DIR:")
         for dir,mode in self.privilege.items():
-            print("%s %s" % (dir,mode))
+            print("%-3s %s" % (mode,dir))
 
     def write_priv_to_file(self,filename):
         svn_logger.debug("Group(%s) write to file(%s)  " % (self.name,filename))

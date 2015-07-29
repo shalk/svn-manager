@@ -9,7 +9,8 @@ from svnid import *
 from svnlog import svn_logger
 import re
 
-class SvnAuth:
+
+class SvnAuth(object):
     """SVN权限管理器
 
     成员变量：
@@ -45,8 +46,16 @@ class SvnAuth:
 
     """
 
+    _instance=None
+    def __new__(cls,*args,**kwargs):
+        if not cls._instance:
+           svn_logger.debug("SvnAuth function __new__ once")
+           #cls._instance = super(SvnAuth, cls).__new__(cls, *args, **kwargs)
+           cls._instance = super(SvnAuth, cls).__new__(cls)
+        return cls._instance
 
     def __init__(self,passwdfile=None,authfile=None):
+        self.x = 1
         self.id_dict={}
         self.group_dict = {}
         svn_logger.info("create svnauth")
@@ -54,6 +63,17 @@ class SvnAuth:
             self.read_passwdfile(passwdfile)
         if  authfile:
             self.read_authfile(authfile)
+
+    def refresh(self,passwdfile=None,authfile=None):
+        self.id_dict={}
+        self.group_dict = {}
+        svn_logger.info("refresh svnauth from file")
+        if passwdfile:
+            self.read_passwdfile(passwdfile)
+        if  authfile:
+            self.read_authfile(authfile)
+
+
 
     def read_passwdfile(self,passwdfile):
         svn_logger.info("read passwd from file(%s)" % passwdfile)
@@ -325,16 +345,21 @@ class SvnAuth:
         pass
 
     def display_id_priv(self,name):
+        print ("#####################################")
         priv_dict = self.get_id_priv(name)
         if priv_dict is None:
             return
         print("ID: %s" % name)
         print("DIR:")
         for dir,mode in priv_dict.items():
-            print("%s %s" % (dir,mode))
+            print("%-3s %s" % (mode,dir))
+        print ("#####################################\n")
 
     def display_group_priv(self,group_name):
+        print ("#####################################\n")
         group = self.get_group_priv(group_name)
         if group is None:
             return
         group.display()
+        print ("#####################################\n")
+
