@@ -101,7 +101,7 @@ class SvnAuth(object):
 
 
     def read_authfile(self,authfile):
-        svn_logger.info("read line from file")
+        svn_logger.info("read line from file(%s)" % authfile)
         try:
             authfh = open(authfile,'r')#,encoding='utf-8')
 
@@ -126,6 +126,7 @@ class SvnAuth(object):
             # 状态1   遇到[group]标志之后
             # 状态2   遇到[/dir] 目录之后 ，并记录目录名称
             for line in authfh:
+                svn_logger.debug("read line from file(%s)" % line)
                 if tmp_status == 0:
                     match = pattern_group_flag.match(line)
                     if match:
@@ -292,7 +293,7 @@ class SvnAuth(object):
         try:
             authfh = open(authfile,"w")
                #print group and user list
-            authfh.write("[group]\n")
+            authfh.write("[groups]\n")
             for group_name in sorted(self.group_dict.keys()):
                 group = self.group_dict[group_name]
                 userlist = group.get_idlist_as_string()
@@ -318,7 +319,7 @@ class SvnAuth(object):
                     authfh.write("\n")
             authfh.write ("##########user privilege  end #############\n")
         except IOError:
-            svn_logger("can not open (%s)" % authfile)
+            svn_logger.error("can not open (%s)" % authfile)
         finally:
             authfh.close()
 

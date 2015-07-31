@@ -162,6 +162,7 @@ class SvnMaster():
             elif cmp(op,'destroy') == 0:
                 self.group_destroy(group_name)
             else:
+                svn_logger.warn("op(%s) 不存在" % op)
                 pass
         elif cmp(mtype,'id') == 0:
             if cmp(op,'add') == 0:
@@ -175,6 +176,7 @@ class SvnMaster():
             elif cmp(op,'change') == 0:
                 self.id_set_pass(passwd)
             else:
+                svn_logger.warn("op(%s) 不存在" % op)
                 pass
         else:
             pass
