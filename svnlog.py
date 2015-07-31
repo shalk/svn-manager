@@ -19,7 +19,7 @@ def svn_log():
 
     ch = logging.StreamHandler()
     #设置显示的级别
-    ch.setLevel(logging.WARN)
+    ch.setLevel(logging.INFO)
     ch.setFormatter(formatter)
 
     logger.addHandler(fh)

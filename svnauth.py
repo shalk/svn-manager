@@ -67,12 +67,15 @@ class SvnAuth(object):
     def refresh(self,passwdfile=None,authfile=None):
         self.id_dict={}
         self.group_dict = {}
-        svn_logger.info("refresh svnauth from file")
+        svn_logger.info("refresh svnauth from file(%s),(%s)" % (passwdfile,authfile))
         if passwdfile:
             self.read_passwdfile(passwdfile)
-        if  authfile:
+        else:
+            svn_logger.debug("passwdfile is None ")
+        if authfile:
             self.read_authfile(authfile)
-
+        else:
+            svn_logger.debug("authfile is None ")
 
 
     def read_passwdfile(self,passwdfile):

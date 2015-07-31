@@ -16,7 +16,8 @@ class SvnMaster():
     方法
        初始化
 
-       从文件导入权限
+       从文件导入,并初始化
+       从内存写入文件
 
        增组
        删组
@@ -34,6 +35,9 @@ class SvnMaster():
        查ID权限
        查组权限
 
+       打印ID权限
+       打印组权限
+
        查看申请清单
        批准申请
 
@@ -41,12 +45,41 @@ class SvnMaster():
 
     """
     def __init__(self,name="admin",passwd="admin",passwdfile=None,authfile=None):
-        self.name = name
-        self.passwd = passwd
-        self.auth = svnauth.SvnAuth(passwdfile,authfile)
+        self.name       = name
+        self.passwd     = passwd
+        self.authfile   = authfile
+        self.passwdfile = passwdfile
+        self.auth       = svnauth.SvnAuth(passwdfile,authfile)
 
-    def import_auth(self,passwdfile,authfile):
-        self.auth.refresh(passwdfile,authfile)
+    def read_ini(self):
+        import svnconfig
+        config_dict     =   svnconfig.read_config_to_dict()
+        self.authfile   =   config_dict['local_authfile']
+        self.passwdfile =   config_dict['local_passwdfile']
+
+    def import_auth(self,passwdfile=None,authfile=None):
+
+        if passwdfile is None or authfile is None:
+            self.read_ini()
+        else:
+            self.passwdfile = passwdfile
+            self.authfile   = authfile
+
+        self.auth.refresh(self.passwdfile,self.authfile)
+
+    def write(self,passwdfile=None,authfile=None):
+
+        if passwdfile is None or authfile is None:
+            self.read_ini()
+        else:
+            self.passwdfile = passwdfile
+            self.authfile   = authfile
+
+        self.auth.write_passwdfile(self.passwdfile)
+        self.auth.write_authfile(self.authfile)
+
+    def backup():
+        pass
 
     def group_create(self,name):
         self.auth.group_create(name)
@@ -66,7 +99,8 @@ class SvnMaster():
     def group_del_priv(self,name,dir):
         self.auth.group_del_priv(name,dir)
 
-    def id_add(self,name,passwd):
+    def id_add(self,name,passwd=None):
+        passwd=name
         self.auth.id_add(name,passwd)
 
     def id_del(self,name):
@@ -87,8 +121,15 @@ class SvnMaster():
     def get_group_priv(self,name):
         return self.get_group_priv(name)
 
+    def display_group_priv(self,name):
+        self.auth.display_group_priv(name)
+
+    def display_id_priv(self,name):
+        self.auth.display_id_priv(name)
+
     def get_request_list(self):
         pass
+
     def permit_request(self,request):
         """
         参数
@@ -99,23 +140,40 @@ class SvnMaster():
             DIR
             MODE
         """
-        mtype = request["type"]
-        name = request['name']
-        op   = request['op']
-        dir  = request['dir']
-        mode = request['mode']
+        mtype      = request["type"]
+        group_name = request['group_name']
+        id_name    = request['id_name']
+        op         = request['op']
+        dir        = request['dir']
+        mode       = request['mode']
+        passwd     = request['passwd']
+
         if cmp(mtype,'group') == 0:
             if cmp(op,'add') == 0:
-                self.group_add_priv(name,dir,mode)
+                self.group_add_priv(group_name,dir,mode)
             elif cmp(op,'del') == 0:
-                self.group_del_priv(name,dir)
+                self.group_del_priv(group_name,dir)
+            elif cmp(op,'add_id') == 0:
+                self.group_add_id(group_name,id_name)
+            elif cmp(op,'del_id') == 0:
+                self.group_del_id(group_name,id_name)
+            elif cmp(op,'create') == 0:
+                self.group_create(group_name)
+            elif cmp(op,'destroy') == 0:
+                self.group_destroy(group_name)
             else:
                 pass
         elif cmp(mtype,'id') == 0:
             if cmp(op,'add') == 0:
-                self.id_add_priv(name,dir,mode)
+                self.id_add_priv(id_name,dir,mode)
             elif cmp(op,'del') == 0:
-                self.id_del_priv(name,dir)
+                self.id_del_priv(id_name,dir)
+            elif cmp(op,'create') == 0:
+                self.id_add(id_name)
+            elif cmp(op,'destory') == 0:
+                self.id_del(id_name)
+            elif cmp(op,'change') == 0:
+                self.id_set_pass(passwd)
             else:
                 pass
         else:
