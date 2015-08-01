@@ -179,6 +179,7 @@ class SvnMaster():
                 svn_logger.warn("op(%s) 不存在" % op)
                 pass
         else:
+            svn_logger.warn("type(%s) 不存在" % type)
             pass
 
 

@@ -1,0 +1,10 @@
+README
+setup.py
+svn-manager/svnauth.py
+svn-manager/svnconfig.py
+svn-manager/svngroup.py
+svn-manager/svnid.py
+svn-manager/svnlog.py
+svn-manager/svnmaster.py
+svn-manager/svnsftp.py
+svn-manager/svnuser.py
