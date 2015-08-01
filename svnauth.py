@@ -203,8 +203,11 @@ class SvnAuth(object):
             svn_logger.warn("Group %s  exist , don't create again" % name)
 
     def group_destroy(self,name):
-        svn_logger.info("destory group(%s)",name)
-        del self.group_dict[name]
+        if name not in self.group_dict.keys():
+            svn_looger.warn("Group %s not exist, can not be destoried " % name)
+        else:
+            svn_logger.info("destory group(%s)",name)
+            del self.group_dict[name]
 
     def group_add_id(self,group_name,id_name):
         if group_name not  in self.group_dict.keys():
@@ -252,6 +255,9 @@ class SvnAuth(object):
 
     def id_del(self,name):
         svn_logger.info("Id(%s) deleted in idlist of svnauth" % name)
+        if  name not in  self.id_dict.keys():
+            svn_logger.warn("Id %s is not exist,can not be deleted " % name )
+            return
         for group_name in self.group_dict.keys():
             self.group_dict[group_name].del_id(self.id_dict[name])
         del self.id_dict[name]
@@ -271,6 +277,9 @@ class SvnAuth(object):
             print("ID %s not exist,can not add priv" % name)
 
     def id_set_pass(self,name,passwd):
+        if  name not in  self.id_dict.keys():
+            svn_logger.warn("Id %s is not exist,can not be changed password " % name )
+            return
         svn_logger.info("Id(%s) will be changed password" % passwd)
         self.id_dict[name].set_pass(passwd)
 
