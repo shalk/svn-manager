@@ -4,7 +4,7 @@ import logging
 
 def svn_log():
     #logger_name="svn_mgr_main"
-    logger_filename="svn.log"
+    logger_filename="/var/log/svn.log"
 
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
@@ -19,7 +19,7 @@ def svn_log():
 
     ch = logging.StreamHandler()
     #设置显示的级别
-    ch.setLevel(logging.INFO)
+    ch.setLevel(logging.WARNING)
     ch.setFormatter(formatter)
 
     logger.addHandler(fh)
