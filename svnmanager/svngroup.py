@@ -49,7 +49,10 @@ class SvnGroup:
 
     def del_privilege(self,dir):
         svn_logger.debug("Group(%s) del priv (%s) " % (self.name,dir))
-        del self.privilege[dir]
+        if dir in self.privilege :
+            del self.privilege[dir]
+        else:
+            svn_logger.warn("Group(%s) do not have privilege dir(%s)" % (self.name,dir))
 
     def get_privilege(self,dir):
         svn_logger.debug("Group(%s) get priv (%s) " % (self.name,dir))

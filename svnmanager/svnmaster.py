@@ -93,7 +93,7 @@ class SvnMaster():
         self.auth.group_create(name)
 
     def group_destroy(self,name):
-        self.auth.group_destroy()
+        self.auth.group_destroy(name)
 
     def group_add_id(self,group_name,id_name):
         self.auth.group_add_id(group_name,id_name)
