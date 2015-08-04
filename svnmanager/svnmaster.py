@@ -57,7 +57,12 @@ class SvnMaster():
         self.authfile   =   config_dict['local_authfile']
         self.passwdfile =   config_dict['local_passwdfile']
 
-    def import_auth(self,passwdfile=None,authfile=None):
+    def read(self,passwdfile=None,authfile=None):
+        """
+            从文件读取权限，参数为空
+            则读取ini 文件指定的passwdfile,authfile文件
+
+        """
 
         if passwdfile is None or authfile is None:
             self.read_ini()
@@ -77,6 +82,9 @@ class SvnMaster():
 
         self.auth.write_passwdfile(self.passwdfile)
         self.auth.write_authfile(self.authfile)
+
+    def clear(self):
+        self.auth.refresh()
 
     def backup():
         pass
