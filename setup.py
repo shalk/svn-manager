@@ -1,9 +1,18 @@
 from distutils.core import setup
 
 setup(
-    name='svn-manager',
+    name='svnmanager',
     version='1.0.0',
-    packages= ['svn-manager'],
+    packages= ['svnmanager',
+#               'svnmanager.svnauth',
+#               'svnmanager.svnconfig',
+#               'svnmanager.svngroup',
+#               'svnmanager.svnid',
+#               'svnmanager.svnlog',
+#               'svnmanager.svnmaster',
+#               'svnmanager.svnsftp',
+#               'svnmanager.svnuser',
+               ],
     url='www.google.com',
     license='MIT',
     author='shalk',

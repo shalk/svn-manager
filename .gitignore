@@ -10,3 +10,8 @@ main.py
 test.py
 svn.ini
 dist/
+clean.sh
+files.txt
+install.sh
+uninstall.sh
+build/

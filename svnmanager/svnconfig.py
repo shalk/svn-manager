@@ -6,10 +6,10 @@ import ConfigParser
 #
 #  读写svn ini 文件
 #
-def read_config_to_dict(path='./svn.ini'):
+def read_config_to_dict(ini='/etc/svn.ini'):
     """
-    从path文件里读取svn_server字段
-    :param path:
+    从ini文件里读取svn_server字段
+    :param ini:
     :return:svn_sftp_dict
     """
     cf = ConfigParser.ConfigParser()
@@ -17,8 +17,8 @@ def read_config_to_dict(path='./svn.ini'):
     field="svn_server"
     local_field="local"
     try:
-        svn_logger.debug("read svn ini file(%s) " % path )
-        cf.read(path)
+        svn_logger.debug("read svn ini file(%s) " % ini )
+        cf.read(ini)
         svn_sftp_dict['hostname'] = cf.get(field,'hostname')
         svn_sftp_dict['port'] = cf.getint(field,'port')
         svn_sftp_dict['username'] = cf.get(field,'username')
@@ -28,7 +28,7 @@ def read_config_to_dict(path='./svn.ini'):
         svn_sftp_dict['local_passwdfile'] = cf.get(local_field,'passwdfile')
         svn_sftp_dict['local_authfile'] = cf.get(local_field,'authfile')
     except IOError as e:
-        svn_logger.error("open svn ini file (%s) failed" % path)
+        svn_logger.error("open svn ini file (%s) failed" % ini)
     return svn_sftp_dict
 
 

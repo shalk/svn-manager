@@ -86,15 +86,15 @@ def send_passwd():
 
     send(config_dict=config_dict,remote_file=config_dict['passwdfile'],local_file=config_dict['local_passwdfile'])
 
-def getall():
-    config_dict = svnconfig.read_config_to_dict()
+def getall(ini='/etc/svn.ini'):
+    config_dict = svnconfig.read_config_to_dict(ini)
 
 
     get(config_dict=config_dict,remote_file=config_dict['authfile'],local_file=config_dict['local_authfile'])
     get(config_dict=config_dict,remote_file=config_dict['passwdfile'],local_file=config_dict['local_passwdfile'])
 
-def sendall():
-    config_dict = svnconfig.read_config_to_dict()
+def sendall(ini='/etc/svn.ini'):
+    config_dict = svnconfig.read_config_to_dict(ini)
 
 
     send(config_dict=config_dict,remote_file=config_dict['authfile'],local_file=config_dict['local_authfile'])
