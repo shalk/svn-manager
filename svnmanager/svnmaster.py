@@ -121,7 +121,7 @@ class SvnMaster():
         self.auth.id_del_priv(name,dir)
 
     def id_set_pass(self,name,passwd):
-        self.auth.set_pass(name,passwd)
+        self.auth.id_set_pass(name,passwd)
 
     def get_id_priv(self,name):
         return self.get_id_priv(name)
@@ -182,7 +182,7 @@ class SvnMaster():
             elif cmp(op,'destory') == 0:
                 self.id_del(id_name)
             elif cmp(op,'change') == 0:
-                self.id_set_pass(passwd)
+                self.id_set_pass(id_name,passwd)
             else:
                 svn_logger.warn("op(%s) 不存在" % op)
                 pass
