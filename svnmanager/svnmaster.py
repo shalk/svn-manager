@@ -179,7 +179,7 @@ class SvnMaster():
                 self.id_del_priv(id_name,dir)
             elif cmp(op,'create') == 0:
                 self.id_add(id_name)
-            elif cmp(op,'destory') == 0:
+            elif cmp(op,'destroy') == 0:
                 self.id_del(id_name)
             elif cmp(op,'change') == 0:
                 self.id_set_pass(id_name,passwd)

@@ -52,8 +52,11 @@ request={ 'type':'id','op':'add', 'group_name':None, 'id_name':"yangkun", 'dir':
 me.permit_request(request)
 request={ 'type':'id','op':'del', 'group_name':None, 'id_name':"yangkun", 'dir':'/root', 'mode':'rw', 'passwd':'111111', }
 me.permit_request(request)
-request={ 'type':'id','op':'add', 'group_name':None, 'id_name':"yangkun", 'dir':'/root', 'mode':'rw', 'passwd':'111111', }
-me.permit_request(request)
+
+for i in range(10):
+    id_name = "test" + str(i)
+    request={ 'type':'id','op':'create', 'group_name':None, 'id_name':id_name, 'dir':'', 'mode':'', 'passwd':'111111', }
+    me.permit_request(request)
 request={ 'type':'id','op':'change', 'group_name':None, 'id_name':"yangkun", 'dir':'', 'mode':'', 'passwd':'123456', }
 me.permit_request(request)
 me.display_id_priv("yangkun")
